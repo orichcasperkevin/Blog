@@ -35,10 +35,10 @@ class SavingsGoalAccount(Account):
         super().__init__(account_name, account_number)
         self.goal_amount = goal_amount
 
-    def withdrawal(self, amount):
-        if amount > 0 and amount <= self.balance and self.balance - amount >= self.goal_amount:
+    def withdraw(self, amount):
+        if self.balance  >= self.goal_amount:
             self.balance -= amount
-            self.transactions.append(f"Withdrew ${amount}")
+            self.transactions.append(-abs(amount))
             return True
         else:
             print("Invalid withdrawal amount or goal not reached.")
@@ -65,8 +65,8 @@ savings_account = SavingsGoalAccount(account_name="Savings", account_number="789
 # Deposit and Withdrawal (only allowed when the goal is reached)
 savings_account.deposit(2000)
 savings_account.deposit(3000)
-savings_account.withdrawal(1000)  # This withdrawal is allowed
-savings_account.withdrawal(2000)  # This withdrawal is not allowed
+savings_account.withdraw(1000)  # This withdrawal is allowed
+savings_account.withdraw(2000)  # This withdrawal is not allowed
 
 # Get Transactions and Balance
 print("Account Name:", savings_account.account_name)
