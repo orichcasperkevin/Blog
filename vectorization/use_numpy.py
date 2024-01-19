@@ -1,8 +1,8 @@
-from benchmark import perf
+from benchmark import timing_context
 import numpy as np
 
-DATA = np.random.rand(30_000_000)
+DATA = np.random.rand(50_000_000)
 
-with perf():
+with timing_context():
     mean = DATA.sum() / len(DATA)
     result = DATA - mean
