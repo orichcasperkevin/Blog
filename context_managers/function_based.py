@@ -1,3 +1,5 @@
+from contextlib import contextmanager
+
 PLANET_INFO = {
     "Mercury": {"moons": 0, "position_from_sun": 1, "vol_km3": 6.083e10},
     "Venus": {"moons": 0, "position_from_sun": 2, "vol_km3": 9.2843e11},
@@ -11,22 +13,13 @@ PLANET_INFO = {
 UNITS_CONSUMED_TO_LEAVE_JUPITER = 20
 FUEL_CONSUMPTION_RATE = UNITS_CONSUMED_TO_LEAVE_JUPITER / PLANET_INFO['Jupiter']['vol_km3']  # Adjusted for illustration
 
-class PlanetContextManager:
-    def __init__(self,planet,fuel):
-        self.planet = planet
-        self.fuel = fuel
-
-    def __enter__(self):
-        print(f"Entering the {self.planet} context...")        
-        return PLANET_INFO[self.planet]
-    
-    def __exit__(self, exc_type, exc_value, exc_tb):                       
-        self.fuel = self.fuel - (PLANET_INFO[self.planet]['vol_km3'] * FUEL_CONSUMPTION_RATE)
-        print(f"Leaving {self.planet}...You will have {self.fuel} units of fuel left")
-        print(exc_type, exc_value, exc_tb, sep="\n")
-
+@contextmanager
+def planet_context_manager(planet,fuel):
+    print(f"Entering the {planet} context...")        
+    yield PLANET_INFO[planet]
+    fuel = fuel - (PLANET_INFO[planet]['vol_km3'] * FUEL_CONSUMPTION_RATE)
+    print(f"Leaving {planet}...You will have {fuel} units of fuel left")
         
-
-with PlanetContextManager("Jupiter",100) as planet:
+with planet_context_manager("Jupiter",100) as planet:
     print(planet)
-    print(planet['distance_from_sun'])
+    # print(planet['distance_from_sun'])

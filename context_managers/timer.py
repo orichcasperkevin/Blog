@@ -1,3 +1,4 @@
+from abc import ABC,abstractmethod
 import time
 
 class TimerContext:
@@ -11,13 +12,13 @@ class TimerContext:
         elapsed_time = self.end_time - self.start_time
         print(f"Timer stopped. Elapsed time: {elapsed_time} seconds")
 
-# Usage
-with TimerContext():
-    # Code inside this block will be timed
-    time.sleep(2)  # Simulating some processing time
 
+class TaskADT(ABC):
+    @abstractmethod
+    def execute():
+        pass
 
-class Task:
+class Task(TaskADT):
     def __init__(self, name):
         self.name = name
 
@@ -27,14 +28,15 @@ class Task:
         time.sleep(3)
 
 # Define a convenient API for the Task class
-class ConvenientTaskAPI:
-    def __init__(self, task_name):
-        self.task = Task(task_name)
+class TimedTask(TaskADT):
+    def __init__(self, task_instance: TaskADT):
+        self.task = task_instance
 
-    def run_with_timing(self):
+    def execute(self):
         with TimerContext():
             self.task.execute()
 
 # Usage
-convenient_task = ConvenientTaskAPI("Sample Task")
-convenient_task.run_with_timing()
+task_instance = Task("Sample Task")
+timed_task = TimedTask(task_instance)
+timed_task.execute()
