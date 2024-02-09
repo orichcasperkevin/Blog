@@ -52,6 +52,7 @@ def account(*,account_name, account_number, initial_balance=0):
 
 def savings_goal_acount(*,account_name, account_number, goal_amount):
     parent = account
+    # create a closure from parent
     child = parent(account_name=account_name,account_number=account_number)   
     goal_amount = goal_amount
 
@@ -67,16 +68,7 @@ def savings_goal_acount(*,account_name, account_number, goal_amount):
     child.withdraw = withdraw
     return child
 
-# my_account = account(account_name="John Doe", account_number="123456", initial_balance=1000)
-# # Deposit and Withdrawal
-# my_account.deposit(500)
-# my_account.withdraw(200)
 
-
-# # Get Transactions and Balance
-# print("Account Detail:\n", my_account.get_account_detail())
-# print("Transactions:", my_account.get_transactions())
-# print("Current Balance:", my_account.get_balance())
 
 savings_account = savings_goal_acount(account_name="Savings", account_number="789012", goal_amount=5000)
 

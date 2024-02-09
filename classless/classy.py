@@ -1,3 +1,5 @@
+
+
 class Account:
     def __init__(self,account_name, account_number, initial_balance=0):
         self.account_name = account_name
@@ -55,10 +57,10 @@ my_account.withdraw(200)
 
 
 # Get Transactions and Balance
-print("Account Name:", my_account.account_name)
-print("Account Number:", my_account.account_number)
-print("Transactions:", my_account.get_transactions())
-print("Current Balance:", my_account.get_balance())
+# print("Account Name:", my_account.account_name)
+# print("Account Number:", my_account.account_number)
+# print("Transactions:", my_account.get_transactions())
+# print("Current Balance:", my_account.get_balance())
 
 savings_account = SavingsGoalAccount(account_name="Savings", account_number="789012", goal_amount=5000)
 

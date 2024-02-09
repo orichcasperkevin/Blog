@@ -1,18 +1,26 @@
-class ChangeResetContext:
-    def __init__(self, value):
-        self.value = value
+from contextlib import contextmanager
 
-    def __enter__(self):
-        print(f"Changing value to {self.value}")
-        return self
+# Global configuration dictionary
+global_config = {'debug_mode': False, 'timeout': 10}
 
-    def __exit__(self, exc_type, exc_value, traceback):
-        print(f"Resetting value to original")
+@contextmanager
+def temporary_config_change(new_value, key):
+    # Save the original value
+    original_value = global_config[key]
+    # Change the global configuration value temporarily
+    global_config[key] = new_value
 
-# Usage
-original_value = 10
-with ChangeResetContext(original_value) as context:
-    # Code inside this block can use the changed value
-    context.value = 20
-    print(f"Current value: {context.value}")
+    yield
 
+    #reset config.
+    global_config[key] = original_value
+
+
+# Example usage
+print("Original Configuration:", global_config)
+with temporary_config_change(True, 'debug_mode'):
+    print("Configuration Inside Context:", global_config)
+    # Some code that runs with the modified configuration
+
+
+print("Configuration After Context:", global_config)

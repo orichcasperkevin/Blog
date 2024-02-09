@@ -7,5 +7,5 @@ def outer(message):
     return inner
 
 
-fnc = outer('Its casper here')
-fnc()
+closure = outer('Its casper here')
+closure()
