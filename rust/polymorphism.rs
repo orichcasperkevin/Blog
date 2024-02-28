@@ -1,5 +1,7 @@
 trait Move {
-    fn move_forward(&self);
+    fn move_forward(&self){
+        println!("Just move");
+    }
 }
 
 struct Car;
@@ -18,11 +20,8 @@ impl Move for Bicycle {
     }
 }
 
-// impl Move for Motorcycle {
-//     fn move_forward(&self) {
-//         println!("Motorcycle is accelerating forward.");
-//     }
-// }
+impl Move for Motorcycle {}
+
 
 
 fn main() {
@@ -32,5 +31,5 @@ fn main() {
 
     car.move_forward();       // Output: Car is driving forward.
     bicycle.move_forward();   // Output: Bicycle is pedaling forward.
-    motorcycle.move_forward();// Output: Motorcycle is accelerating forward.
+    motorcycle.move_forward();// Output: Just move.
 }
